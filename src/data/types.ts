@@ -1,5 +1,4 @@
 export type CategorySlug =
-  | "referral"
   | "consult"
   | "imaging"
   | "radiology"

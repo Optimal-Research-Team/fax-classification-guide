@@ -2,72 +2,11 @@ import { Category } from "./types";
 
 export const categories: Category[] = [
   {
-    slug: "referral",
-    name: "Referral",
-    shortDescription: "Specialist appointment communications & scheduling workflows",
-    definition:
-      "Communications from specialist clinics regarding specialist appointments for a patient that you have previously referred to them. This includes appointment confirmations/notifications, unable-to-reach notices, requests for more information, declined referrals, and referral/intake forms being sent to or from a specialist clinic.",
-    belongsHere: [
-      "Appointment confirmations/notifications from specialist clinics",
-      "Notices that the specialist couldn't reach the patient",
-      "Requests for more information to complete a referral",
-      "Declined or returned referrals",
-      "Referral/intake forms sent to or from specialist clinics",
-      "Referral rejection cover letters (even with appended original referral)",
-    ],
-    doesNotBelong: [
-      "Consultation notes or follow-up notes from specialists (those are Consult)",
-      "Documents with demographics/DOB/HCN but no referral workflow",
-      "Generic fax headers mentioning 'referral' without actual referral content",
-      "Imaging centre appointment notifications (those are Radiology)",
-      "Returned requisitions — categorize by the service type instead",
-    ],
-    priority: {
-      abnormalCriteria: [
-        "Referral contains urgent clinical concerns or time-sensitive language",
-        "Serious suspected diagnoses requiring prompt review",
-        "Incomplete referral missing necessary supporting documents",
-        "Patient no-showed or did not attend appointment",
-        "Appointment could not be booked (including declined referrals)",
-        "Patient cancelled the appointment",
-        "Patient could not be reached by the specialist office",
-      ],
-      normalCriteria: [
-        "Straightforward routine referral with no urgency signals",
-        "Routine appointment confirmation or scheduling notification",
-        "No negative status indicated",
-      ],
-    },
-    dateExtraction: [
-      { priority: 1, dateField: "Date referral was made", note: "Not the appointment date" },
-      {
-        priority: 2,
-        dateField: "Date of response letter",
-        note: "When specialist office sends back acknowledgment/wait time/request for info — use this date, not the original referral date",
-      },
-    ],
-    edgeCases: [
-      {
-        scenario: "Specialist sends a cover letter rejecting a referral with the original referral form appended",
-        correctCategory: "referral",
-        explanation:
-          "The cover letter is the primary content. Description should reflect the rejection (e.g., 'Cardiology - Referral rejection from [clinic]'). Extract date from the cover letter.",
-      },
-      {
-        scenario: "Imaging centre faxes back a requisition with appointment details added",
-        correctCategory: "radiology",
-        explanation:
-          "Even though it looks like an appointment notification, the service is imaging. Classify as Radiology, not Referral.",
-      },
-    ],
-    color: "#3b82f6",
-  },
-  {
     slug: "consult",
     name: "Consult",
-    shortDescription: "Specialist consultation reports & clinical notes",
+    shortDescription: "Specialist consultations, referral communications, and clinical notes",
     definition:
-      "Consultation reports for both initial consultations and follow-up visits from a specialist or allied health practitioner (cardiologist, urologist, dermatologist, endocrinologist, OB-GYN, psychotherapist, etc.). These documents contain clinical information. Also includes procedure notes, discharge summaries, oncology reports, and surgery reports from specialists.",
+      "All communications with specialist clinics — both clinical notes (consultation reports, follow-up visits, procedure notes, discharge summaries) and referral workflow communications (appointment confirmations, unable-to-reach notices, declined referrals, intake forms). This category covers the full lifecycle of a specialist interaction, from the initial referral through to the consultation report.",
     belongsHere: [
       "Initial consultation reports from specialists",
       "Follow-up visit notes from specialists",
@@ -76,10 +15,18 @@ export const categories: Category[] = [
       "Oncology reports",
       "Surgery reports",
       "Psychotherapist clinical notes",
+      "Appointment confirmations/notifications from specialist clinics",
+      "Notices that the specialist couldn't reach the patient",
+      "Requests for more information to complete a referral",
+      "Declined or returned referrals",
+      "Referral/intake forms sent to or from specialist clinics",
+      "Referral rejection cover letters (even with appended original referral)",
     ],
     doesNotBelong: [
-      "Appointment scheduling communications (those are Referral)",
-      "Documents with only scheduling info and no clinical content",
+      "Documents with demographics/DOB/HCN but no specialist workflow",
+      "Generic fax headers mentioning 'referral' without actual referral content",
+      "Imaging centre appointment notifications (those are Radiology)",
+      "Returned requisitions — categorize by the service type instead",
       "Standalone questionnaires not attached to a consult note (those are Others)",
     ],
     priority: {
@@ -93,20 +40,43 @@ export const categories: Category[] = [
         "Concerning language: 'worrisome', 'suspicious', 'malignant', 'cannot rule out'",
         "Patient seen in ER or admitted to hospital",
         "Patient discharged back with new management plan",
+        "Referral contains urgent clinical concerns or time-sensitive language",
+        "Incomplete referral missing necessary supporting documents",
+        "Patient no-showed or did not attend specialist appointment",
+        "Appointment could not be booked (including declined referrals)",
+        "Patient cancelled the specialist appointment",
+        "Patient could not be reached by the specialist office",
       ],
       normalCriteria: [
         "Reassuring findings, no new diagnosis",
         "'No significant abnormalities' noted",
         "Routine follow-up planned with no physician action required",
         "Stable chronic condition being monitored",
+        "Straightforward routine referral with no urgency signals",
+        "Routine appointment confirmation or scheduling notification",
       ],
     },
     dateExtraction: [
-      { priority: 1, dateField: "Visit/appointment date", note: "The date the patient was seen" },
-      { priority: 2, dateField: "Dictation date", note: "Administrative artifact, not the clinical event" },
-      { priority: 3, dateField: "Transcription date", note: "Last resort — farthest from the clinical event" },
+      { priority: 1, dateField: "Visit/appointment date", note: "The date the patient was seen (for consultation notes)" },
+      { priority: 2, dateField: "Date referral was made", note: "For referral workflow documents — not the appointment date" },
+      { priority: 3, dateField: "Date of response letter", note: "When specialist office sends back acknowledgment/wait time/request for info" },
+      { priority: 4, dateField: "Dictation date", note: "Administrative artifact, not the clinical event" },
+      { priority: 5, dateField: "Transcription date", note: "Last resort — farthest from the clinical event" },
     ],
-    edgeCases: [],
+    edgeCases: [
+      {
+        scenario: "Specialist sends a cover letter rejecting a referral with the original referral form appended",
+        correctCategory: "consult",
+        explanation:
+          "The cover letter is the primary content. Description should reflect the rejection (e.g., 'Cardiology - Referral rejection from [clinic]'). Extract date from the cover letter.",
+      },
+      {
+        scenario: "Imaging centre faxes back a requisition with appointment details added",
+        correctCategory: "radiology",
+        explanation:
+          "Even though it looks like an appointment notification, the service is imaging. Classify as Radiology, not Consult.",
+      },
+    ],
     color: "#8b5cf6",
   },
   {

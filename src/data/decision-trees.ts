@@ -39,10 +39,10 @@ export const mainDecisionTree: DecisionNode[] = [
   },
   {
     id: "consult-or-referral",
-    question: "Does the document contain clinical findings/notes, or is it about scheduling/referral workflow?",
+    question: "Is this a specialist letter, referral communication, or patient photo?",
     options: [
-      { label: "Clinical notes, findings, diagnosis, recommendations", nextId: "result-consult" },
-      { label: "Appointment notification, booking, declined referral, unable to reach", nextId: "result-referral" },
+      { label: "Clinical notes, findings, diagnosis, or recommendations", nextId: "result-consult" },
+      { label: "Appointment notification, booking, declined referral, unable to reach", nextId: "result-consult" },
       { label: "Patient photo (usually dermatology)", nextId: "result-photo" },
     ],
   },
@@ -63,7 +63,6 @@ export const mainDecisionTree: DecisionNode[] = [
   { id: "result-radiology", question: "Radiology", options: [] },
   { id: "result-imaging", question: "Imaging", options: [] },
   { id: "result-consult", question: "Consult", options: [] },
-  { id: "result-referral", question: "Referral", options: [] },
   { id: "result-prescription", question: "Prescription", options: [] },
   { id: "result-insurance", question: "Insurance", options: [] },
   { id: "result-legal", question: "Legal", options: [] },
@@ -82,17 +81,6 @@ export const disambiguationFlows = [
       "Radiologist or nuclear medicine physician → Radiology",
       "Cardiologist, ophthalmologist, or other specialist → Imaging",
       "Cannot determine? Default to Radiology",
-    ],
-  },
-  {
-    id: "referral-vs-consult",
-    title: "Referral vs. Consult",
-    subtitle: "Scheduling workflow vs. clinical content",
-    steps: [
-      "Does the document contain clinical notes, findings, or recommendations?",
-      "Yes → Consult (even if it says 'referral' in the header)",
-      "No, only appointment scheduling, confirmations, or status updates → Referral",
-      "Rejected referral with cover letter → Referral (rejection is the primary content)",
     ],
   },
   {

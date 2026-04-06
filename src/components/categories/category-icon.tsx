@@ -1,5 +1,4 @@
 import {
-  Send,
   Stethoscope,
   Heart,
   ScanLine,
@@ -16,7 +15,6 @@ import {
 import { CategorySlug } from "@/data/types";
 
 const iconMap: Record<CategorySlug, React.ElementType> = {
-  referral: Send,
   consult: Stethoscope,
   imaging: Heart,
   radiology: ScanLine,
