@@ -1,0 +1,88 @@
+import { Mistake } from "./types";
+
+export const commonMistakes: Mistake[] = [
+  {
+    id: "rad-vs-img",
+    doText: "Check who SIGNED the report. Radiologist → Radiology. Cardiologist or other specialist → Imaging. When unsure, default to Radiology.",
+    dontText: "Classify based on the procedure name alone. A cardiac MRI signed by a radiologist is Radiology, not Imaging.",
+    category: "Radiology / Imaging",
+    severity: "high",
+  },
+  {
+    id: "ecg-is-lab",
+    doText: "Classify ECG, ABPM, and Holter monitor reports as Lab — even when they come from cardiology clinics like PACE.",
+    dontText: "Put ECG or ABPM reports under Imaging or Radiology. These are non-imaging diagnostic tests.",
+    category: "Lab",
+    severity: "high",
+  },
+  {
+    id: "pharmacy-rx",
+    doText: "Classify pharmacy renewal/clarification faxes (e.g., Shoppers Drug Mart renewals) as Prescription.",
+    dontText: "Put pharmacy faxes under Others. If a pharmacy is requesting anything prescription-related, it's Prescription.",
+    category: "Prescription",
+    severity: "high",
+  },
+  {
+    id: "referral-keyword",
+    doText: "Only classify as Referral when the document is clearly part of a specialist referral workflow (appointment confirmation, unable to reach, declined referral, intake form).",
+    dontText: "Classify as Referral just because you see demographics (DOB/HCN), generic fax headers, or the word 'referral' in a header.",
+    category: "Referral",
+    severity: "high",
+  },
+  {
+    id: "imaging-centre-default",
+    doText: "Default any document from an imaging/DI centre to Radiology — whether it's a report, appointment notification, requisition return, or cover letter.",
+    dontText: "Use Referral for 'Confidential Report' imaging attachments or for imaging centre appointment notifications.",
+    category: "Radiology",
+    severity: "high",
+  },
+  {
+    id: "returned-req",
+    doText: "Categorize returned/annotated requisitions by the SERVICE type on the requisition. Mammography no-show → Radiology. Cardiology consult declined → Consult.",
+    dontText: "Default returned requisitions to Referral or Others. The category follows the service, not the form type.",
+    category: "Multiple",
+    severity: "high",
+  },
+  {
+    id: "mychart-oldchart",
+    doText: "Classify MyChart conversation logs and patient-portal exports as Old Chart (historical records).",
+    dontText: "Put MyChart exports under Others. These are historical record copies.",
+    category: "Old Chart",
+    severity: "medium",
+  },
+  {
+    id: "junk-vs-others",
+    doText: "Use Junk ONLY for truly blank, garbled, test, or advertising pages with zero clinical/admin value.",
+    dontText: "Classify readable admin content (fee schedules, invoices, benefits notices, generic clinic letters) as Junk. These are Others.",
+    category: "Junk / Others",
+    severity: "medium",
+  },
+  {
+    id: "consent-routing",
+    doText: "Classify standalone consent forms, registration forms, and policy acknowledgments as Others — unless they indicate records transfer intent (then Old Chart).",
+    dontText: "Put consent forms under Legal just because they're technically legal documents. Legal requires an active legal counterparty.",
+    category: "Others / Legal",
+    severity: "medium",
+  },
+  {
+    id: "lu-vs-trillium",
+    doText: "LU (Limited Use) code forms → Prescription (code goes on the prescription). Trillium SA forms → Insurance (standalone form for payer adjudication).",
+    dontText: "Mix up LU codes with Trillium. The key: does it go ON the prescription or is it a SEPARATE form for a payer?",
+    category: "Prescription / Insurance",
+    severity: "medium",
+  },
+  {
+    id: "questionnaires",
+    doText: "Classify standalone questionnaires (intake, screening, symptom checklists) as Others when not attached to another clinical document.",
+    dontText: "Classify standalone questionnaires as Consult or Referral. If bundled with a consult note, classify by the parent document.",
+    category: "Others",
+    severity: "low",
+  },
+  {
+    id: "multiple-results",
+    doText: "When a fax has multiple test results of the same category, combine in description (e.g., 'Echocardiogram and Stress Test Reports'). Use the most recent date. Flag abnormal if ANY result is abnormal.",
+    dontText: "Split the classification or only describe one of the tests. Treat the fax as a single document.",
+    category: "Multiple",
+    severity: "low",
+  },
+];
