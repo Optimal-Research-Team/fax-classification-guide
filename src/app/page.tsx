@@ -21,12 +21,12 @@ export default function Home() {
         <DateRulesSection />
 
         {/* Footer */}
-        <footer className="border-t border-[#4a7c4a]/10 py-8 px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-7xl flex items-center justify-between">
-            <p className="text-xs text-[#6b9e6b]/40">
+        <footer className="border-t border-gray-200 py-8 px-4 sm:px-6">
+          <div className="mx-auto max-w-5xl flex items-center justify-between">
+            <p className="text-xs text-gray-400">
               beOptimal — Internal Reference Guide
             </p>
-            <p className="text-xs text-[#6b9e6b]/30">
+            <p className="text-xs text-gray-400">
               Last updated: April 2026
             </p>
           </div>

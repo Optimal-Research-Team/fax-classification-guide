@@ -15,7 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fax Classification Guide | Optimal Primary Care",
+  title: "Fax Classification Guide | beOptimal",
   description:
     "Reference guide for medical fax categorization, triage, and routing rules for the admin team.",
 };
@@ -28,9 +28,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} dark antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
     >
-      <body className="min-h-screen bg-[#0f1a0f] text-[#e8f0e8] font-[family-name:var(--font-inter)]">
+      <body className="min-h-screen bg-white text-gray-900 font-[family-name:var(--font-inter)]">
         {children}
       </body>
     </html>

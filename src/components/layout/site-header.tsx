@@ -24,16 +24,14 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass" : "bg-transparent"
+        scrolled ? "glass shadow-sm" : "bg-white"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          <a href="#" className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#4a7c4a]/15 border border-[#4a7c4a]/25">
-              <FileText className="h-4 w-4 text-[#6b9e6b]" />
-            </div>
-            <span className="text-sm font-semibold tracking-tight">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6">
+        <div className="flex h-14 items-center justify-between">
+          <a href="#" className="flex items-center gap-2">
+            <FileText className="h-4 w-4 text-gray-400" />
+            <span className="text-sm font-semibold text-gray-900">
               Fax Classification Guide
             </span>
           </a>
@@ -43,7 +41,7 @@ export function SiteHeader() {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-1.5 text-[13px] text-[#8ab89a]/70 hover:text-[#e8f0e8] transition-colors rounded-md hover:bg-white/5"
+                className="px-3 py-1.5 text-[13px] text-gray-500 hover:text-gray-900 transition-colors rounded-md hover:bg-gray-50"
               >
                 {link.label}
               </a>
@@ -51,7 +49,7 @@ export function SiteHeader() {
           </nav>
 
           <button
-            className="md:hidden p-2 text-zinc-400 hover:text-zinc-100"
+            className="md:hidden p-2 text-gray-500 hover:text-gray-900"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -60,13 +58,13 @@ export function SiteHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden glass border-t border-white/5">
-          <nav className="flex flex-col px-4 py-3 gap-1">
+        <div className="md:hidden bg-white border-t border-gray-100">
+          <nav className="flex flex-col px-4 py-2 gap-0.5">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-sm text-zinc-400 hover:text-zinc-100 rounded-md hover:bg-white/5"
+                className="px-3 py-2 text-sm text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
